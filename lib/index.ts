@@ -159,7 +159,7 @@ export class Compiler {
   }
   private _compileTypeLiteralNode(node: ts.TypeLiteralNode): string {
     const members = node.members
-      .map(this.compileNode)
+      .map(this.compileNode, this)
       .filter(n => n !== ignoreNode)
       .map(n => "  " + this.indent(n) + ",\n");
     return `t.iface([], {\n${members.join("")}})`;
@@ -201,7 +201,7 @@ export class Compiler {
   private _compileInterfaceDeclaration(node: ts.InterfaceDeclaration): string {
     const name = this.getName(node.name);
     const members = node.members
-      .map(this.compileNode)
+      .map(this.compileNode, this)
       .filter(n => n !== ignoreNode)
       .map(n => "  " + this.indent(n) + ",\n");
     const extend: string[] = [];
